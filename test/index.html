@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Memory Vault</title>
+    <style>
+        /* DESIGN THE THEME */
+        :root {
+            --bg-color: #fff5f7;
+            --card-color: #ffffff;
+            --accent-pink: #ff4d6d;
+            --text-dark: #590d22;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            font-family: 'Georgia', serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            margin: 0;
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 5px; }
+        .subtitle { margin-bottom: 40px; font-style: italic; opacity: 0.7; }
+
+        /* THE GRID */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .memory-card {
+            background: var(--card-color);
+            padding: 30px 10px;
+            border-radius: 20px;
+            border: 2px dashed var(--accent-pink);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .memory-card:hover {
+            transform: scale(1.05) rotate(2deg);
+            background: var(--accent-pink);
+            color: white;
+            border-style: solid;
+        }
+
+        /* POPUP BOX (MODAL) */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .overlay-content {
+            max-width: 85%;
+            max-height: 75vh;
+            border: 8px solid white;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+
+        .caption {
+            color: white;
+            margin-top: 20px;
+            font-size: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>❤️ Our Memory Vault ❤️</h1>
+    <div class="subtitle">Let’s revisit our beautiful moments, one gentle click at a time </div>
+
+    <div class="memory-grid" id="grid">
+        </div>
+
+    <div id="popup" class="overlay" onclick="closeImage()">
+        <span class="close-btn">&times;</span>
+        <img id="popup-img" class="overlay-content" src="" alt="Memory">
+        <div id="popup-text" class="caption"></div>
+    </div>
+
+    <script>
+        /**********************************************************
+         * STEP 1: ADD YOUR PHOTOS HERE
+         * Replace the text in quotes with your actual photo links!
+         **********************************************************/
+        const myMemories = [
+            { date: "April 7, 2022", url: "1.jpeg", note: "First Picture Together!!" },
+            { date: "May 3, 2022", url: "2.jpeg", note: "Annoying me is your thing" },
+             { date: "Septemper 27 2023", url: "3.jpeg", note: "Our Signature Pose started" },
+             { date: "October 21 2023", url: "4.jpeg", note: "First Night Out" },
+         { date: "January 9, 2024", url: "5.jpeg", note: "The day before our story started" },
+        { date: "March 5 2024", url: "6.jpeg", note: "When I first See the beach with you" },
+        { date: "March 6 2024", url: "7.jpeg", note: "Mumbai with you" },
+        { date: "April 17, 2024", url: "8.jpeg", note: "Our First Date" },
+        { date: "April 20, 2024", url: "9.jpeg", note: "Farewell" },
+        { date: "May 6, 2024", url: "10.jpeg", note: "Your Last Birthday Celebrated Together" },
+        { date: "May 11, 2024", url: "11.jpeg", note: "Lonaval Trip" },
+        { date: "May 30, 2024", url: "12.jpeg", note: "Movie Date" },
+            { date: "13 august, 2025", url: "13.jpeg", note: "Date when you came back" },
+            { date: "15 august, 2025", url: "14.jpeg", note: "A romantic Pose on Beach" },
+            { date: "16 august, 2025", url: "15.jpeg", note: "Love in eyes" },
+        ];
+
+
+        // This part builds the website automatically
+        const grid = document.getElementById('grid');
+        myMemories.forEach(item => {
+            let div = document.createElement('div');
+            div.className = 'memory-card';
+            div.innerHTML = item.date;
+            div.onclick = () => showImage(item.url, item.note);
+            grid.appendChild(div);
+        });
+
+        function showImage(url, text) {
+            document.getElementById('popup').style.display = 'flex';
+            document.getElementById('popup-img').src = url;
+            document.getElementById('popup-text').innerHTML = text;
+        }
+
+        function closeImage() {
+            document.getElementById('popup').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
